@@ -1,0 +1,15 @@
+Feature,Construction,Purpose,Leakage Status
+Gold_LKR_Lag_1/2/3/5/7/14/30,Previous Gold LKR values,Capture short- and medium-term price persistence,Safe — historical only
+Gold_Close_Lag_1/2/7/14,Previous international gold prices,Capture international gold-market movement,Safe — historical only
+USD_LKR_Lag_1/2/7/14,Previous USD/LKR values,Capture exchange-rate movement affecting local gold value,Safe — historical only
+Gold_LKR_MA_7/14/30,Previous rolling mean of Gold LKR,Capture local price trend at multiple horizons,Safe — shifted before rolling
+Gold_LKR_STD_7/14/30,Previous rolling standard deviation,Measure local gold-price volatility,Safe — shifted before rolling
+USD_LKR_MA_7,Previous 7-observation USD/LKR mean,Smooth short-term exchange-rate movement,Safe — historical only
+Gold_LKR_EMA_7,Previous-observation exponential moving average,Give more weight to recent historical prices,Safe — historical only
+Gold_LKR_Return_1/7/14,Gold LKR percentage changes,Represent short- and medium-term momentum,Safe — current and past only
+USD_LKR_Return_1/7,USD/LKR percentage changes,Represent exchange-rate momentum,Safe — current and past only
+High_Low_Spread,International High minus Low,Capture daily international gold trading range,Safe — reference-date information
+Close_Open_Spread,International Close minus Open,Capture daily market direction,Safe — reference-date information
+Gold_Close_Volatility_7,Rolling volatility of international gold returns,Measure recent international market risk,Safe — shifted before rolling
+Gold_LKR_to_International_Gold_Ratio,Gold LKR divided by international gold Close,Capture cross-market relationship,Safe — reference-date information
+Gold_LKR_vs_MA7,Current Gold LKR relative to previous 7-day mean,Capture whether price is above/below recent trend,Safe — historical rolling mean

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldWise | Gold Price Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">
+                <span></span>
+                <span></span>
+            </div>
+
+            <div>
+                <div class="brand-name">GOLDWISE</div>
+                <div class="brand-subtitle">PRICE INTELLIGENCE</div>
+            </div>
+        </div>
+
+        <nav class="side-nav">
+
+            <button class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" data-section="prediction">
+                <span class="nav-icon">↗</span>
+                <span>Prediction</span>
+            </button>
+
+            <button class="nav-item" data-section="model-analysis">
+                <span class="nav-icon">▥</span>
+                <span>Model Analysis</span>
+            </button>
+
+            <button class="nav-item" data-section="data-insights">
+                <span class="nav-icon">◉</span>
+                <span>Data Insights</span>
+            </button>
+
+            <button class="nav-item" data-section="settings">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </button>
+
+            <button class="nav-item" data-section="about">
+                <span class="nav-icon">ⓘ</span>
+                <span>About</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="side-image">
+                <img src="{{ url_for('static', filename='assets/gold_bars.png') }}" alt="Gold bars">
+            </div>
+
+            <div class="sidebar-quote">
+                <span>Precious Insights</span>
+                <strong>for a Brighter Tomorrow</strong>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="mobile-menu" id="mobileMenu">☰</button>
+
+            <div>
+                <div class="eyebrow">GOLD PRICE INTELLIGENCE</div>
+                <h1>Gold Price Forecasting</h1>
+                <p>Machine-learning based insights for smarter short-term purchasing decisions.</p>
+            </div>
+
+            <div class="live-status">
+                <span class="status-dot"></span>
+                <span>LIVE MODEL</span>
+            </div>
+        </header>
+
+
+        <!-- FORECAST REFERENCE -->
+        <section class="reference-bar">
+            <div class="reference-title">FORECAST REFERENCE</div>
+
+            <select id="dateSelect"></select>
+
+            <div class="reference-note">
+                Selected model-ready date:
+                <strong id="selectedDateLabel">—</strong>
+            </div>
+        </section>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page-section active-section">
+
+            <div class="hero">
+
+                <div class="hero-copy">
+                    <div class="section-kicker">✦ MACHINE LEARNING • FORECASTING</div>
+
+                    <h2>Gold Price<br><span>Forecasting</span></h2>
+
+                    <p>
+                        Approximately 7-day ahead forecast in Sri Lankan Rupees.
+                        Explore market direction and model performance in one place.
+                    </p>
+                </div>
+
+                <div class="hero-image">
+                    <img src="{{ url_for('static', filename='assets/gold_header.png') }}" alt="Gold market">
+                </div>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+            <div class="kpi-grid">
+
+                <article class="kpi-card">
+                    <div class="kpi-label">CURRENT GOLD PRICE</div>
+                    <div class="kpi-value" id="currentPrice">—</div>
+                    <div class="kpi-meta">Reference price</div>
+                </article>
+
+                <article class="kpi-card accent">
+                    <div class="kpi-label">PREDICTED PRICE • 7 DAYS</div>
+                    <div class="kpi-value" id="predictedPrice">—</div>
+                    <div class="kpi-meta" id="targetDate">Target: —</div>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-label">EXPECTED CHANGE</div>
+                    <div class="kpi-value" id="expectedChange">—</div>
+                    <div class="kpi-meta">Model forecast movement</div>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-label">EXPECTED CHANGE %</div>
+                    <div class="kpi-value" id="expectedChangePct">—</div>
+                    <div class="kpi-meta">7-day percentage movement</div>
+                </article>
+
+            </div>
+
+
+            <!-- DECISION -->
+            <section class="decision-card">
+
+                <div>
+                    <div class="section-kicker">PURCHASING DECISION SUPPORT</div>
+                    <div class="decision-value" id="decisionValue">MONITOR</div>
+                    <p id="decisionText">
+                        Select a model-ready reference date to generate the forecast.
+                    </p>
+                </div>
+
+                <div class="decision-side">
+                    <span>MODEL</span>
+                    <strong id="modelName">—</strong>
+
+                    <span>FORECAST HORIZON</span>
+                    <strong>~7 calendar days</strong>
+                </div>
+
+            </section>
+
+
+            <!-- CHARTS -->
+            <div class="chart-grid">
+
+                <section class="panel chart-panel large">
+                    <div class="panel-head">
+                        <div>
+                            <div class="section-kicker">GOLD PRICE TREND</div>
+                            <h3>Historical price & 7-day forecast</h3>
+                        </div>
+                    </div>
+
+                    <canvas id="historyChart"></canvas>
+                </section>
+
+                <section class="panel chart-panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="section-kicker">MODEL VALIDATION</div>
+                            <h3>Actual vs Predicted • Test Set</h3>
+                        </div>
+                    </div>
+
+                    <canvas id="actualPredictedChart"></canvas>
+                </section>
+
+            </div>
+
+        </section>
+
+
+        <!-- PREDICTION -->
+        <section id="prediction" class="page-section">
+
+            <div class="page-heading">
+                <div class="section-kicker">FORECAST ENGINE</div>
+                <h2>Prediction</h2>
+                <p>Use a model-ready historical reference date to generate the approximately 7-day target forecast.</p>
+            </div>
+
+            <div class="prediction-layout">
+
+                <div class="prediction-main panel">
+                    <div class="big-label">PREDICTED GOLD PRICE</div>
+                    <div class="big-number" id="predictionBig">—</div>
+                    <div class="prediction-target" id="predictionTarget">Target: —</div>
+
+                    <div class="prediction-divider"></div>
+
+                    <div class="prediction-row">
+                        <span>Current reference</span>
+                        <strong id="predictionCurrent">—</strong>
+                    </div>
+
+                    <div class="prediction-row">
+                        <span>Expected movement</span>
+                        <strong id="predictionMovement">—</strong>
+                    </div>
+
+                    <div class="prediction-row">
+                        <span>Decision</span>
+                        <strong id="predictionDecision">—</strong>
+                    </div>
+                </div>
+
+                <div class="panel methodology">
+                    <div class="section-kicker">METHOD</div>
+                    <h3>How the forecast is produced</h3>
+                    <ol>
+                        <li>Load the saved final machine-learning model.</li>
+                        <li>Use the exact model-ready feature set.</li>
+                        <li>Select the historical reference date.</li>
+                        <li>Generate the 7-day target prediction.</li>
+                        <li>Compare the forecast with the reference price.</li>
+                    </ol>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MODEL ANALYSIS -->
+        <section id="model-analysis" class="page-section">
+
+            <div class="page-heading">
+                <div class="section-kicker">MODEL QUALITY</div>
+                <h2>Model Analysis</h2>
+                <p>Validation, unseen-test performance, model comparison and feature influence.</p>
+            </div>
+
+            <div class="metric-grid">
+
+                <article class="metric-box">
+                    <span>VALIDATION R²</span>
+                    <strong id="validationR2">—</strong>
+                </article>
+
+                <article class="metric-box">
+                    <span>VALIDATION RMSE</span>
+                    <strong id="validationRMSE">—</strong>
+                </article>
+
+                <article class="metric-box">
+                    <span>UNSEEN TEST R²</span>
+                    <strong id="testR2">—</strong>
+                </article>
+
+                <article class="metric-box">
+                    <span>UNSEEN TEST MAPE</span>
+                    <strong id="testMAPE">—</strong>
+                </article>
+
+            </div>
+
+            <div class="chart-grid">
+                <section class="panel chart-panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="section-kicker">MODEL COMPARISON</div>
+                            <h3>Validation RMSE</h3>
+                        </div>
+                    </div>
+                    <canvas id="modelComparisonChart"></canvas>
+                </section>
+
+                <section class="panel chart-panel">
+                    <div class="panel-head">
+                        <div>
+                            <div class="section-kicker">FEATURE INFLUENCE</div>
+                            <h3>Top model features</h3>
+                        </div>
+                    </div>
+                    <canvas id="featureChart"></canvas>
+                </section>
+            </div>
+
+        </section>
+
+
+        <!-- DATA INSIGHTS -->
+        <section id="data-insights" class="page-section">
+
+            <div class="page-heading">
+                <div class="section-kicker">DATA INTELLIGENCE</div>
+                <h2>Data Insights</h2>
+                <p>Key interpretation points from the forecasting workflow.</p>
+            </div>
+
+            <div class="insight-grid" id="insightGrid"></div>
+
+            <section class="panel feature-list-panel">
+                <div class="section-kicker">MODEL INPUTS</div>
+                <h3>Features used by the saved model</h3>
+                <div class="feature-chips" id="featureChips"></div>
+            </section>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section id="settings" class="page-section">
+
+            <div class="page-heading">
+                <div class="section-kicker">SYSTEM</div>
+                <h2>Settings</h2>
+                <p>Dashboard configuration and model connection status.</p>
+            </div>
+
+            <div class="settings-grid">
+
+                <div class="panel setting-card">
+                    <span>MODEL</span>
+                    <strong id="settingsModel">—</strong>
+                </div>
+
+                <div class="panel setting-card">
+                    <span>MODEL FILE</span>
+                    <strong>final_gold_price_model.joblib</strong>
+                </div>
+
+                <div class="panel setting-card">
+                    <span>TARGET</span>
+                    <strong>Target_Gold_LKR_7D</strong>
+                </div>
+
+                <div class="panel setting-card">
+                    <span>FORECAST HORIZON</span>
+                    <strong>Approximately 7 calendar days</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section id="about" class="page-section">
+
+            <div class="page-heading">
+                <div class="section-kicker">GOLDWISE</div>
+                <h2>About</h2>
+                <p>Machine-learning based short-term gold price forecasting and purchasing decision support.</p>
+            </div>
+
+            <div class="about-card panel">
+                <div class="about-mark">G</div>
+                <div>
+                    <h3>GoldWise Price Intelligence</h3>
+                    <p>
+                        GoldWise combines historical gold-market data,
+                        engineered features and a saved machine-learning
+                        forecasting model to estimate the future gold price
+                        in Sri Lankan Rupees.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            GOLDWISE • PRICE INTELLIGENCE • MACHINE LEARNING FORECASTING
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
